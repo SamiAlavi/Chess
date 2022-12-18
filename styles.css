@@ -1,5 +1,7 @@
 :root {
     --cell-size: 70px;
+    --animation-from-color: purple;
+    --animation-to-color: red;
 }
 
 #table {
@@ -29,13 +31,13 @@
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 5px purple; }
-    to { text-shadow: 0 0 5px red; }
+    from { text-shadow: 0 0 5px var(--animation-from-color); }
+    to { text-shadow: 0 0 5px var(--animation-to-color); }
 }
 
 @keyframes pulse {
-    from { background-color: purple; }
-    to { background-color: red; }
+    from { background-color: var(--animation-from-color); }
+    to { background-color: var(--animation-to-color); }
 }
 
 .possible-move {
