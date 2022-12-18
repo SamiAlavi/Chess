@@ -6,7 +6,7 @@ const TIMEOUT_REMOVE_CLASS = 0;
 const tower = "♜";
 const knight = "♞";
 const bishop = "♝";
-const pieces = [tower, bishop, knight];
+const pieces = [bishop, knight, tower];
 let selectedPiece = null;
 
 createChessBoard();
@@ -133,7 +133,7 @@ function getTowerPossibleMoves(rowIndex, colIndex) {
             }
         }
     });
-    
+
     return possibleMoves;
 }
 
@@ -149,17 +149,38 @@ function checkPossibleMove(possibleMoves, rowIndex, colIndex) {
 
 function getBishopPossibleMoves(rowIndex, colIndex) {
     const possibleMoves = [];
+    const temp = [1, -1];
 
-    let diff = 1;
-    while (diff <= 8) {
-        possibleMoves.push(
-            getCellId(rowIndex-diff, colIndex-diff),
-            getCellId(rowIndex+diff, colIndex+diff),
-            getCellId(rowIndex-diff, colIndex+diff),
-            getCellId(rowIndex+diff, colIndex-diff),
-        );
-        diff+=1;
-    }
+    temp.forEach((mul) => {
+        let diff = 1;
+        while (diff <= 8) {
+            let difff = diff*mul;
+            if (!checkPossibleMove(possibleMoves, rowIndex-difff, colIndex-difff)) {
+                break;
+            }
+            diff+=1;
+        }
+
+        diff = 1;
+        while (diff <= 8) {
+            let difff = diff*mul;
+            if (!checkPossibleMove(possibleMoves, rowIndex-difff, colIndex+difff)) {
+                break;
+            }
+            diff+=1;
+        }
+    });
+
+    // let diff = 1;
+    // while (diff <= 8) {
+    //     possibleMoves.push(
+    //         getCellId(rowIndex-diff, colIndex-diff),
+    //         getCellId(rowIndex+diff, colIndex+diff),
+    //         getCellId(rowIndex-diff, colIndex+diff),
+    //         getCellId(rowIndex+diff, colIndex-diff),
+    //     );
+    //     diff+=1;
+    // }
     return possibleMoves;
 }
 
