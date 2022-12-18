@@ -7,9 +7,12 @@ const tower = "♜";
 const knight = "♞";
 const bishop = "♝";
 const pieces = [bishop, knight, tower];
+const popup = document.getElementById("popup");
+
 let selectedPiece = null;
 
 createChessBoard();
+setupPopup();
 
 function createElement(element) {
     return document.createElement(element);
@@ -229,5 +232,19 @@ function emptyCellFunctionality(cell, rowIndex, colIndex) {
         removeClasses(selectedPiece, "glow")
         selectedPiece = null;
     }
+    else {
+
+    }
     removePossibleMoveClass();
+}
+
+function setupPopup() {
+    const table = document.getElementById("table");
+    if (! (popup && table)) {
+        return;
+    }
+    
+    const tableStyle = getComputedStyle(table);
+    popup.style.margin = tableStyle.margin;
+    popup.style.width = tableStyle.width;
 }
