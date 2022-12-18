@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		:root {
+			--cell-size: 70px;
+		}
+		#table {
+			border-spacing: 0px;
+		}
+
+		.cell {
+			width: var(--cell-size);
+			height: var(--cell-size);
+			border: 1px solid black;
+			font-size: 50px;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+
+  		@keyframes pulse {
+			from { background-color: purple; }
+			to { background-color: red; }
+		}
+
+		.possible-move {
+			animation: pulse 1s infinite alternate;
+		}
+
+		.white {
+			background-color: white;
+		}
+
+		.gray {
+			background-color: gray;
+		}
+
+		.float-left {			
+			float: left;
+		}
+
+	</style>
+</head>
+<body>
+
+	<table id="table">
+		<tbody id="tableBody"></tbody>
+	</table>
+
+	<script src="chess.js"></script>
+
+</body>
+</html>
