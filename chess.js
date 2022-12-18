@@ -2,10 +2,12 @@
 
 const chessBoardLength = 8;
 const CLASS_POSSIBLE_MOVE = "possible-move";
+const TIMEOUT_REMOVE_CLASS = 0;
 const tower = "♜";
 const knight = "♞";
 const bishop = "♝";
 const pieces = [tower, bishop, knight];
+let selectedPiece = null;
 
 createChessBoard();
 
@@ -61,15 +63,26 @@ function createCell(rowIndex, colIndex) {
 function addCellEventListeners(cell, rowIndex, colIndex) {
     cell.addEventListener("click", (event) => {
         const cellContent = cell.textContent;
+        if (selectedPiece?.id === cell.id) {
+            selectedPiece = null;
+            removePossibleMoveClass();
+            return;
+        }
 
         if (cellContent === tower) {
+            selectedPiece = cell;
             addTowerFunctionality(cell, rowIndex, colIndex);
         }
         else if (cellContent === knight) {
+            selectedPiece = cell;
             addKnightFunctionality(cell, rowIndex, colIndex);
         }
         else if (cellContent === bishop) {
+            selectedPiece = cell;
             addBishopFunctionality(cell, rowIndex, colIndex);
+        }
+        else {
+            emptyCellFunctionality(cell, rowIndex, colIndex);
         }
 
         console.log(cellContent);
@@ -98,7 +111,7 @@ function addTowerFunctionality(tower, rowIndex, colIndex) {
     setTimeout(() => {
         const possibleMoves = getTowerPossibleMoves(rowIndex, colIndex);
         addPossibleMovesClass(possibleMoves);
-    }, 0);
+    }, TIMEOUT_REMOVE_CLASS);
 }
 
 function getTowerPossibleMoves(rowIndex, colIndex) {
@@ -157,7 +170,7 @@ function addKnightFunctionality(knight, rowIndex, colIndex) {
     setTimeout(() => {
         const possibleMoves = getKnightPossibleMoves(rowIndex, colIndex);
         addPossibleMovesClass(possibleMoves);
-    }, 0);
+    }, TIMEOUT_REMOVE_CLASS);
 }
 
 function addBishopFunctionality(bishop, rowIndex, colIndex) {
@@ -165,5 +178,14 @@ function addBishopFunctionality(bishop, rowIndex, colIndex) {
     setTimeout(() => {
         const possibleMoves = getBishopPossibleMoves(rowIndex, colIndex);
         addPossibleMovesClass(possibleMoves);
-    }, 0);
+    }, TIMEOUT_REMOVE_CLASS);
+}
+
+function emptyCellFunctionality(cell, rowIndex, colIndex) {
+    if (selectedPiece && cell.classList.contains(CLASS_POSSIBLE_MOVE)) {
+        cell.textContent = selectedPiece.textContent;
+        selectedPiece.textContent = "";
+        selectedPiece = null;
+    }
+    removePossibleMoveClass();
 }
