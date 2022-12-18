@@ -138,18 +138,7 @@ function getBishopPossibleMoves(rowIndex, colIndex) {
 function getKnightPossibleMoves(rowIndex, colIndex) {
     const possibleMoves = [];
     const temp = [1, -1];
-
-    let diff = 1;
-    while (diff <= 2) {
-        possibleMoves.push(
-            getCellId(rowIndex-diff, colIndex),
-            getCellId(rowIndex+diff, colIndex),
-            getCellId(rowIndex, colIndex-diff),
-            getCellId(rowIndex, colIndex+diff),
-        );
-        diff+=1;
-    }
-    diff-=1;
+    const diff = 2;
 
     temp.forEach((mul) => {
         possibleMoves.push(
