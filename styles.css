@@ -1,6 +1,7 @@
 :root {
     --cell-size: 70px;
 }
+
 #table {
     border-spacing: 0px;
     margin: auto;
@@ -14,15 +15,34 @@
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-  @keyframes pulse {
+.glow {
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    -ms-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px purple; }
+    to { text-shadow: 0 0 5px red; }
+}
+
+@keyframes pulse {
     from { background-color: purple; }
     to { background-color: red; }
 }
 
 .possible-move {
-    animation: pulse 1s infinite alternate;
+    -webkit-animation: pulse 1s ease-in-out infinite alternate;
+    -moz-animation: pulse 1s ease-in-out infinite alternate;
+    -ms-animation: pulse 1s ease-in-out infinite alternate;
+    animation: pulse 1s ease-in-out infinite alternate;
 }
 
 .white {

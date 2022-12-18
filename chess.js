@@ -19,6 +19,10 @@ function addClasses(element, ...classes) {
     element.classList.add(...classes);
 }
 
+function removeClasses(element, ...classes) {
+    element.classList.remove(...classes);
+}
+
 function getCellId(rowIndex, colIndex) {
     return `${rowIndex},${colIndex}`;
 }
@@ -60,25 +64,36 @@ function createCell(rowIndex, colIndex) {
     return cell;
 }
 
+function selectPiece(cell) {
+    selectedPiece = cell;
+    addClasses(selectedPiece, "glow");
+}
+
+function deselectSelectedPiece() {
+    removeClasses(selectedPiece, "glow")
+    selectedPiece = null;
+    removePossibleMoveClass();
+}
+
 function addCellEventListeners(cell, rowIndex, colIndex) {
     cell.addEventListener("click", (event) => {
         const cellContent = cell.textContent;
+        
         if (selectedPiece?.id === cell.id) {
-            selectedPiece = null;
-            removePossibleMoveClass();
+            deselectSelectedPiece();
             return;
         }
 
         if (cellContent === tower) {
-            selectedPiece = cell;
+            selectPiece(cell);
             addTowerFunctionality(cell, rowIndex, colIndex);
         }
         else if (cellContent === knight) {
-            selectedPiece = cell;
+            selectPiece(cell);
             addKnightFunctionality(cell, rowIndex, colIndex);
         }
         else if (cellContent === bishop) {
-            selectedPiece = cell;
+            selectPiece(cell);
             addBishopFunctionality(cell, rowIndex, colIndex);
         }
         else {
@@ -92,7 +107,7 @@ function addCellEventListeners(cell, rowIndex, colIndex) {
 function removePossibleMoveClass() {
     const cells = document.getElementsByClassName(CLASS_POSSIBLE_MOVE);
     [...cells].forEach((cell) => {
-        cell.classList.remove(CLASS_POSSIBLE_MOVE);
+        removeClasses(cell, CLASS_POSSIBLE_MOVE);
     });
 }
 
@@ -171,16 +186,6 @@ function getBishopPossibleMoves(rowIndex, colIndex) {
         }
     });
 
-    // let diff = 1;
-    // while (diff <= 8) {
-    //     possibleMoves.push(
-    //         getCellId(rowIndex-diff, colIndex-diff),
-    //         getCellId(rowIndex+diff, colIndex+diff),
-    //         getCellId(rowIndex-diff, colIndex+diff),
-    //         getCellId(rowIndex+diff, colIndex-diff),
-    //     );
-    //     diff+=1;
-    // }
     return possibleMoves;
 }
 
@@ -221,6 +226,7 @@ function emptyCellFunctionality(cell, rowIndex, colIndex) {
     if (selectedPiece && cell.classList.contains(CLASS_POSSIBLE_MOVE)) {
         cell.textContent = selectedPiece.textContent;
         selectedPiece.textContent = "";
+        removeClasses(selectedPiece, "glow")
         selectedPiece = null;
     }
     removePossibleMoveClass();
