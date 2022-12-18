@@ -116,20 +116,35 @@ function addTowerFunctionality(tower, rowIndex, colIndex) {
 
 function getTowerPossibleMoves(rowIndex, colIndex) {
     const possibleMoves = [];
+    const temp = [1, -1];
 
-    for (let index = 0; index < chessBoardLength; index++) {
-        if (index === rowIndex) {
-            continue;
+    temp.forEach((mul) => {
+        for (let index = rowIndex+mul; index >= 0; index+=mul) {
+            if (!checkPossibleMove(possibleMoves, index, colIndex)) {
+                break;
+            }
         }
-        possibleMoves.push(getCellId(index, colIndex));
-    }
-    for (let index = 0; index < chessBoardLength; index++) {
-        if (index === colIndex) {
-            continue;
+    });
+
+    temp.forEach((mul) => {
+        for (let index = colIndex+mul; index >= 0; index+=mul) {
+            if (!checkPossibleMove(possibleMoves, rowIndex, index)) {
+                break;
+            }
         }
-        possibleMoves.push(getCellId(rowIndex, index));
-    }
+    });
+    
     return possibleMoves;
+}
+
+function checkPossibleMove(possibleMoves, rowIndex, colIndex) {
+    const cellId = getCellId(rowIndex, colIndex);
+    let cell = document.getElementById(cellId);
+    if (cell?.textContent !== "") {
+        return false;
+    }
+    possibleMoves.push(cellId);
+    return true;
 }
 
 function getBishopPossibleMoves(rowIndex, colIndex) {
